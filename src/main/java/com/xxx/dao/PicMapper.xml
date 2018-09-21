@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxx.dao.PicMapper" >
+  <resultMap id="BaseResultMap" type="com.xxx.entity.Pic" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="pic_desc" property="picDesc" jdbcType="VARCHAR" />
+    <result column="origin_url" property="originUrl" jdbcType="VARCHAR" />
+    <result column="thumbnail_url" property="thumbnailUrl" jdbcType="VARCHAR" />
+    <result column="watermark_url" property="watermarkUrl" jdbcType="VARCHAR" />
+    <result column="origin_md5" property="originMd5" jdbcType="VARCHAR" />
+    <result column="thumbnail_md5" property="thumbnailMd5" jdbcType="VARCHAR" />
+    <result column="watermark_md5" property="watermarkMd5" jdbcType="VARCHAR" />
+    <result column="up_count" property="upCount" jdbcType="BIGINT" />
+    <result column="down_count" property="downCount" jdbcType="BIGINT" />
+    <result column="tag_list" property="tagList" jdbcType="VARCHAR" />
+    <result column="delete_status" property="deleteStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, pic_desc, origin_url, thumbnail_url, watermark_url, origin_md5, thumbnail_md5, 
+    watermark_md5, up_count, down_count, tag_list, delete_status, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xxx.entity.PicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_pic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_pic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xxx.entity.PicExample" >
+    delete from tb_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xxx.entity.Pic" >
+    insert into tb_pic (id, user_id, pic_desc, 
+      origin_url, thumbnail_url, watermark_url, 
+      origin_md5, thumbnail_md5, watermark_md5, 
+      up_count, down_count, tag_list, 
+      delete_status, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{picDesc,jdbcType=VARCHAR}, 
+      #{originUrl,jdbcType=VARCHAR}, #{thumbnailUrl,jdbcType=VARCHAR}, #{watermarkUrl,jdbcType=VARCHAR}, 
+      #{originMd5,jdbcType=VARCHAR}, #{thumbnailMd5,jdbcType=VARCHAR}, #{watermarkMd5,jdbcType=VARCHAR}, 
+      #{upCount,jdbcType=BIGINT}, #{downCount,jdbcType=BIGINT}, #{tagList,jdbcType=VARCHAR}, 
+      #{deleteStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxx.entity.Pic" >
+    insert into tb_pic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="picDesc != null" >
+        pic_desc,
+      </if>
+      <if test="originUrl != null" >
+        origin_url,
+      </if>
+      <if test="thumbnailUrl != null" >
+        thumbnail_url,
+      </if>
+      <if test="watermarkUrl != null" >
+        watermark_url,
+      </if>
+      <if test="originMd5 != null" >
+        origin_md5,
+      </if>
+      <if test="thumbnailMd5 != null" >
+        thumbnail_md5,
+      </if>
+      <if test="watermarkMd5 != null" >
+        watermark_md5,
+      </if>
+      <if test="upCount != null" >
+        up_count,
+      </if>
+      <if test="downCount != null" >
+        down_count,
+      </if>
+      <if test="tagList != null" >
+        tag_list,
+      </if>
+      <if test="deleteStatus != null" >
+        delete_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="picDesc != null" >
+        #{picDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="originUrl != null" >
+        #{originUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailUrl != null" >
+        #{thumbnailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="watermarkUrl != null" >
+        #{watermarkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="originMd5 != null" >
+        #{originMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailMd5 != null" >
+        #{thumbnailMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="watermarkMd5 != null" >
+        #{watermarkMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="upCount != null" >
+        #{upCount,jdbcType=BIGINT},
+      </if>
+      <if test="downCount != null" >
+        #{downCount,jdbcType=BIGINT},
+      </if>
+      <if test="tagList != null" >
+        #{tagList,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null" >
+        #{deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xxx.entity.PicExample" resultType="java.lang.Integer" >
+    select count(*) from tb_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_pic
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.picDesc != null" >
+        pic_desc = #{record.picDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originUrl != null" >
+        origin_url = #{record.originUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumbnailUrl != null" >
+        thumbnail_url = #{record.thumbnailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.watermarkUrl != null" >
+        watermark_url = #{record.watermarkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originMd5 != null" >
+        origin_md5 = #{record.originMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumbnailMd5 != null" >
+        thumbnail_md5 = #{record.thumbnailMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.watermarkMd5 != null" >
+        watermark_md5 = #{record.watermarkMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upCount != null" >
+        up_count = #{record.upCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.downCount != null" >
+        down_count = #{record.downCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.tagList != null" >
+        tag_list = #{record.tagList,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteStatus != null" >
+        delete_status = #{record.deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+
+  <update id="updateCountByExample" parameterType="map" >
+    update tb_pic
+    <set >
+      <if test="addUpCount != null" >
+        up_count = up_count+1,
+      </if>
+      <if test="cancelAddUpCount != null" >
+        up_count = up_count-1,
+      </if>
+      <if test="addDownCount != null" >
+        down_count = down_count + 1,
+      </if>
+      <if test="cancelAddDownCount != null" >
+        down_count = down_count - 1,
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+
+  <update id="updateByExample" parameterType="map" >
+    update tb_pic
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      pic_desc = #{record.picDesc,jdbcType=VARCHAR},
+      origin_url = #{record.originUrl,jdbcType=VARCHAR},
+      thumbnail_url = #{record.thumbnailUrl,jdbcType=VARCHAR},
+      watermark_url = #{record.watermarkUrl,jdbcType=VARCHAR},
+      origin_md5 = #{record.originMd5,jdbcType=VARCHAR},
+      thumbnail_md5 = #{record.thumbnailMd5,jdbcType=VARCHAR},
+      watermark_md5 = #{record.watermarkMd5,jdbcType=VARCHAR},
+      up_count = #{record.upCount,jdbcType=BIGINT},
+      down_count = #{record.downCount,jdbcType=BIGINT},
+      tag_list = #{record.tagList,jdbcType=VARCHAR},
+      delete_status = #{record.deleteStatus,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxx.entity.Pic" >
+    update tb_pic
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="picDesc != null" >
+        pic_desc = #{picDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="originUrl != null" >
+        origin_url = #{originUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailUrl != null" >
+        thumbnail_url = #{thumbnailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="watermarkUrl != null" >
+        watermark_url = #{watermarkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="originMd5 != null" >
+        origin_md5 = #{originMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailMd5 != null" >
+        thumbnail_md5 = #{thumbnailMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="watermarkMd5 != null" >
+        watermark_md5 = #{watermarkMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="upCount != null" >
+        up_count = #{upCount,jdbcType=BIGINT},
+      </if>
+      <if test="downCount != null" >
+        down_count = #{downCount,jdbcType=BIGINT},
+      </if>
+      <if test="tagList != null" >
+        tag_list = #{tagList,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null" >
+        delete_status = #{deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxx.entity.Pic" >
+    update tb_pic
+    set user_id = #{userId,jdbcType=BIGINT},
+      pic_desc = #{picDesc,jdbcType=VARCHAR},
+      origin_url = #{originUrl,jdbcType=VARCHAR},
+      thumbnail_url = #{thumbnailUrl,jdbcType=VARCHAR},
+      watermark_url = #{watermarkUrl,jdbcType=VARCHAR},
+      origin_md5 = #{originMd5,jdbcType=VARCHAR},
+      thumbnail_md5 = #{thumbnailMd5,jdbcType=VARCHAR},
+      watermark_md5 = #{watermarkMd5,jdbcType=VARCHAR},
+      up_count = #{upCount,jdbcType=BIGINT},
+      down_count = #{downCount,jdbcType=BIGINT},
+      tag_list = #{tagList,jdbcType=VARCHAR},
+      delete_status = #{deleteStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

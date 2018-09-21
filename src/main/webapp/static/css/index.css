@@ -1,0 +1,9 @@
+body { padding-top: 70px; }
+.img-thumbnail{
+	max-height: 250px;
+	min-height: 250px;
+	width: auto;
+}
+.caption{
+	height: 100px;
+}
